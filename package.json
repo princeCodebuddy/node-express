@@ -5,13 +5,13 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.json",
-    "start": "cross-env NODE_ENV=production && node dist/index.js",
+    "start": "cross-env NODE_ENV=production node dist/index.js",
     "dev": "cross-env NODE_ENV=development  tsx watch index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
     "node": ">=20",
-    "pnpm": "^8.7.5"
+    "pnpm": ">=8.7.5"
   },
   "keywords": [],
   "author": "",
