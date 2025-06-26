@@ -1,19 +1,18 @@
 import { Request, Response } from "express";
 import { IUser, IUserController } from "../../../interface/UserInterface.js";
+import { PrismaClient } from "../../../../generated/prisma/index.js";
 let users:Array<IUser>=[]
 export default class UserController implements IUserController{
     async createUser(req: Request, res: Response): Promise<any> {
      try{
         const {name, username, email}=req.body as IUser;
-        const newUser: IUser={
-            id: users.length+1,
-            name,
-            username,
-            email
-        }
-        users.push(newUser)
+        const prisma=new PrismaClient()
+         const data=await prisma.user.create({data:{email: email, name:name}})
+         if(!data)return res.status(201).json({
+            message:"Something went wrong"
+        })
         return res.status(201).json({
-            data:newUser,
+            data:data,
             message:"User created successfully"
         })
      }catch(err:any){
@@ -32,6 +31,10 @@ export default class UserController implements IUserController{
     }
     async getUser(req: Request, res: Response): Promise<any> {
         try{
+            const prisma=new PrismaClient()
+           const data=await prisma.user.findMany()
+           console.log(data,'data');
+           
             const user=users.filter(ele=>ele.id==parseInt(req.params.id))
             return res.status(200).json({
                 data: user,
