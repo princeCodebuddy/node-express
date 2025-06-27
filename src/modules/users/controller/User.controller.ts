@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IUser, IUserController } from "../../../interface/UserInterface.js";
-import { PrismaClient } from "../../../../generated/prisma/index.js";
+import { IUser, IUserController } from "../../../interface/UserInterface";
+import { PrismaClient } from "../../../../generated/prisma/index";
 let users:Array<IUser>=[]
 export default class UserController implements IUserController{
     async createUser(req: Request, res: Response): Promise<any> {

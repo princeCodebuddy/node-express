@@ -1,6 +1,6 @@
 import { Router } from "express";
-import HelloController from "../modules/hello/controller/Hello.controller.js";
-import { postHelloValidation } from "../modules/hello/validation/hello.validation.js";
+import HelloController from "../modules/hello/controller/Hello.controller";
+import { postHelloValidation } from "../modules/hello/validation/hello.validation";
 const helloRouter=Router();
 const helloController=new HelloController()
 

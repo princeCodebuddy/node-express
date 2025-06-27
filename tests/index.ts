@@ -1,10 +1,10 @@
 import express, { Router } from "express"
 import cors from "cors"
 import path, { dirname } from "path"
-import { config } from "./src/config/config";
 import { readdirSync } from "fs";
 import { fileURLToPath, pathToFileURL } from "url";
-const __dirname = dirname(fileURLToPath(import.meta.url));
+import { config } from "../src/config/config";
+// const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 app.use(cors({
@@ -38,7 +38,7 @@ const onError = (err: any) => {
             const routesPath = path.join(process.cwd(), 'src/routes')
             readdirSync(routesPath).forEach(async(file) => {
                 const routePath = path.join(routesPath, file)
-                const filePath = path.join(__dirname,'src/routes', config.server.nodeEnvironment == "production" ? file.replace('.ts', '.js') : file); // Adjust the join path based on your project structure
+                const filePath = path.join(process.cwd(),'src/routes', config.server.nodeEnvironment == "production" ? file.replace('.ts', '.js') : file); // Adjust the join path based on your project structure
                 const fileUrl = pathToFileURL(filePath);
                 const routeModule = await import(fileUrl.href);
                 if (routeModule.default && typeof routeModule.default === 'function') {
@@ -59,3 +59,4 @@ const onError = (err: any) => {
         }
     }
 )();
+export default app;

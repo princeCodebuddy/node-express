@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { IHelloController } from "../../../interface/HelloInterface.js";
+import { IHelloController } from "../../../interface/HelloInterface";
 export default class HelloController implements IHelloController {
     async postHello(req: Request, res: Response): Promise<any> {
         try {
