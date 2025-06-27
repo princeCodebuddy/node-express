@@ -9,16 +9,23 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
-model User {
+model Author {
   id      String   @id @default(auto()) @map("_id") @db.ObjectId
   email   String   @unique
-  name    String?
-  address Address?
-  // posts   Post[]
+  name    String
+  Book Book[]
 }
-type Address {
-  street String
-  city   String
-  state  String
-  zip    String
+
+model Genre{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  Book Book[]
+}
+model Book {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  author   Author @relation(fields: [authorId], references: [id])
+  authorId String @db.ObjectId
+  genre Genre @relation(fields: [genreId],references: [id])
+  genreId String @db.ObjectId
 }
