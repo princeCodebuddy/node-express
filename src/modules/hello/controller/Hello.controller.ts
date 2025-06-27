@@ -7,7 +7,7 @@ export default class HelloController implements IHelloController {
                 data: `Hello ${req.body.username}`
             })
         } catch (err: any) {
-            return res.status(201).json({ message: err.message })
+            return res.status(500).json({ message: err.message })
         }
     }
     async paramHello(req: Request, res: Response): Promise<any> {
@@ -16,7 +16,7 @@ export default class HelloController implements IHelloController {
                 data: `Hello ${req.params.username}`
             })
         } catch (err: any) {
-            return res.status(201).json({ message: err.message })
+            return res.status(500).json({ message: err.message })
         }
     }
     async helloWorld(_req: Request, res: Response): Promise<any> {
@@ -25,7 +25,7 @@ export default class HelloController implements IHelloController {
                 data: `Hello World`
             })
         } catch (err: any) {
-            return res.status(201).json({ message: err.message })
+            return res.status(500).json({ message: err.message })
         }
     }
 }
