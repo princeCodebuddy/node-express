@@ -2,9 +2,11 @@ import { NextFunction, Request, Response } from "express"
 import Joi from "joi"
 export const createUserValidation=(req: Request,res: Response, next: NextFunction)=>{
      const joiSchema=Joi.object({
-        name: Joi.string().min(3).max(100).required(),
-        username: Joi.string().min(3).max(20).required(),
-        email: Joi.string().email().min(5).max(30).required()
+        fullName: Joi.string().min(3).max(100).required(),
+        phone: Joi.string().min(10).max(15).required(),
+        email: Joi.string().email().min(5).max(30).required(),
+        password: Joi.string().required(),
+        referralCode: Joi.string().optional()
      })
      const {error}= joiSchema.validate(req.body);
      if(error){

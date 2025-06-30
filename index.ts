@@ -41,6 +41,7 @@ const onError = (err: any) => {
                 const filePath = path.join(__dirname,'src/routes', config.server.nodeEnvironment == "production" ? file.replace('.ts', '.js') : file); // Adjust the join path based on your project structure
                 const fileUrl = pathToFileURL(filePath);
                 const routeModule = await import(fileUrl.href);
+                
                 if (routeModule.default && typeof routeModule.default === 'function') {
                     app.use('', routeModule.default);
                 } else {

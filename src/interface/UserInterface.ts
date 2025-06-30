@@ -1,9 +1,11 @@
 import { Request, Response } from "express";
+import { IResponse } from "../helper/responseHandler";
 
 export interface IUserController{
-    createUser(req:Request, res:Response):Promise<any>
-    getUsers(req:Request,res:Response):Promise<any>
-    getUser(req:Request,res:Response):Promise<any>
+    signup(req:Request, res:Response):Promise<any>
+}
+export interface IUserService{
+    signup(body:any):Promise<IResponse>
 }
 export interface IUser{
     id:number;

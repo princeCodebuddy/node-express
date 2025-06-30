@@ -1,5 +1,9 @@
 
 // generators and datasources
+enum UserRole {
+  ADMIN
+  USER
+}
 generator client {
   provider = "prisma-client-js"
   output   = "../generated/prisma"
@@ -28,4 +32,16 @@ model Book {
   authorId String @db.ObjectId
   genre Genre @relation(fields: [genreId],references: [id])
   genreId String @db.ObjectId
+}
+
+//User Schema
+model User{
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  fullName String
+  email String @unique
+  phone String @unique
+  password String
+  assignedReferralCode String  @default("")
+  role UserRole
+  usedReferralCode String @default("")
 }
