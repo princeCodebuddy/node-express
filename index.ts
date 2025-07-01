@@ -1,12 +1,14 @@
-import express, { Router } from "express"
+import express, { Request, Response, Router } from "express"
 import cors from "cors"
 import path, { dirname } from "path"
 import { config } from "./src/config/config";
 import { readdirSync } from "fs";
 import { fileURLToPath, pathToFileURL } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
+import authMiddleware from './src/middleware/auth';
 
 const app = express();
+ globalThis.auth=authMiddleware();
 app.use(cors({
     origin: '*',
     allowedHeaders: "token",
@@ -21,7 +23,15 @@ app.use(express.urlencoded({
     limit: '50mb'
 }));
 app.use(express.static("./public"));
-app.set("views", path.join(process.cwd(), "views"))
+app.set("views", path.join(process.cwd(), "views"));
+app.set("view engine", "ejs");
+app.use(auth.initialize());
+app.use(async (req: Request, res: Response, next) => {
+    const authMiddlewarePath = path.join(__dirname, 'src/middleware',config.server.nodeEnvironment == "production" ?'auth.js': 'auth.ts');
+    const authMiddleware = (await import(pathToFileURL(authMiddlewarePath).href)).default;
+    authMiddleware(req, res, next);
+    next();
+});
 const onError = (err: any) => {
     if (err.code == "EADDRINUSE") {
         console.error("Port already in use");

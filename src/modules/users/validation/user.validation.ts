@@ -15,3 +15,15 @@ export const createUserValidation=(req: Request,res: Response, next: NextFunctio
      }
      next()
 }
+export const signInValidation=(req: Request,res: Response, next: NextFunction)=>{
+     const joiSchema=Joi.object({
+        email: Joi.string().email().min(5).max(30).required(),
+        password: Joi.string().required()
+     })
+     const {error}= joiSchema.validate(req.body);
+     if(error){
+         res.status(400).json({details: error.details,message:"validation failed"})
+         return;
+     }
+     next()
+}
