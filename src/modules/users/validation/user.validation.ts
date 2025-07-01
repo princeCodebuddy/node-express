@@ -18,7 +18,8 @@ export const createUserValidation=(req: Request,res: Response, next: NextFunctio
 export const signInValidation=(req: Request,res: Response, next: NextFunction)=>{
      const joiSchema=Joi.object({
         email: Joi.string().email().min(5).max(30).required(),
-        password: Joi.string().required()
+        password: Joi.string().required(),
+        role: Joi.string().required().valid("USER","ADMIN")
      })
      const {error}= joiSchema.validate(req.body);
      if(error){
