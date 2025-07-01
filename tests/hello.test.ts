@@ -19,7 +19,6 @@ describe('Hello Get Route', () => {
   
 })
 
-
 describe('Hello post Route', () => {
   it('POST /hello/ should return greeting', async () => {
     const res = await request(app).post('/hello').send({username: 'Prince'});
