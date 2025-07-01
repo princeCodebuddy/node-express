@@ -6,7 +6,6 @@ import { IResponse } from "../../../interface/responseHandler";
 import { IUserService } from "../../../interface/UserInterface";
 import * as argon2 from "argon2";
 import jwt from 'jsonwebtoken';
-const { createCipheriv, createDecipheriv } = await import('node:crypto')
 export class UserService implements IUserService {
     private readonly mailer = new Mailer()
     async signup(body: any): Promise<IResponse> {
@@ -25,6 +24,7 @@ export class UserService implements IUserService {
             const key: Uint8Array = new Uint8Array(Buffer.from(config.cipher.key_phrase, 'utf-8')); // 32-bit key
             const iv: Uint8Array = new Uint8Array(Buffer.from(config.cipher.iv_phrase, 'utf-8')); //16 bit phrase
 
+            const { createCipheriv } = await import('node:crypto')
             const cipher = createCipheriv('aes-256-cbc', key, iv);
             const payload = {
                 data: createUser.id,
@@ -79,11 +79,12 @@ export class UserService implements IUserService {
         try {
             const key: Uint8Array = new Uint8Array(Buffer.from(config.cipher.key_phrase, 'utf-8')); // 32-bit key
             const iv: Uint8Array = new Uint8Array(Buffer.from(config.cipher.iv_phrase, 'utf-8')); //16 bit phrase
+            const {createDecipheriv } = await import('node:crypto')
             const decipher = createDecipheriv('aes-256-cbc', key, iv);
             let decryptedData = decipher.update(value, 'hex', 'utf-8');
             decryptedData += decipher.final('utf-8');
             const parseResponse = JSON.parse(decryptedData);
-            if (parseResponse.expiresAt <= Date.now())return { code: 400, message: "Link has expired", success: false }
+            if (parseResponse.expiresAt <= Date.now()) return { code: 400, message: "Link has expired", success: false }
             const updateInfo = await prisma.user.update({ data: { isEmailVerified: true }, where: { id: parseResponse.data } });
             if (!updateInfo) return { code: 400, message: "Something went wrong", success: false }
             return { code: 200, message: "Email Verified successfully", success: true, data: updateInfo }

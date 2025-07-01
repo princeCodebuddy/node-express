@@ -1,5 +1,5 @@
-import { CipherInterface, MailInterface, ServerInterface } from "../interface/ConfigInterface.js";
-import { envVars } from "./config.validation.js";
+import { CipherInterface, MailInterface, ServerInterface } from "../interface/ConfigInterface";
+import { envVars } from "./config.validation";
 
 export const config = {
     server: <ServerInterface>{

@@ -11,6 +11,6 @@
     "strict": true,
     "skipLibCheck": true,
     "typeRoots": ["node_modules/@types", "./src/interface/global.d.ts"],
-    "types": ["jest"]
+    // "types": ["jest"]
   },
 }

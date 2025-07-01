@@ -12,6 +12,7 @@ export default class HelloController implements IHelloController {
     }
     async paramHello(req: Request, res: Response): Promise<any> {
         try {
+            
             return res.status(200).json({
                 data: `Hello ${req.params.username}`
             })

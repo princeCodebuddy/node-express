@@ -3,9 +3,9 @@ import app from './index';
 
 describe('Hello Get Route With Param', () => {
   it('GET /hello/:username should return greeting', async () => {
-    const res = await request(app).get('/hello/John');
+    const res = await request(app).get('/hello/alex');
     expect(res.statusCode).toBe(200);
-    expect(res.text).toBe("{\"data\":\"Hello John\"}");
+    expect(res.text).toBe("{\"data\":\"Hello alex\"}");
   });
   
 })

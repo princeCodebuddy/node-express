@@ -1,8 +1,8 @@
 import { Request,Response } from "express";
-import { config } from "../config/config.js";
+import { config } from "../config/config";
 import passport from "passport";
 import { ExtractJwt, Strategy } from 'passport-jwt'
-import { prisma } from "../helper/prismaClient.js";
+import { prisma } from "../helper/prismaClient";
 const params = {
     secretOrKey: config.server.jwtSecret,
     jwtFromRequest: ExtractJwt.fromHeader('token')
