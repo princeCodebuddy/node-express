@@ -3,13 +3,10 @@ import { IOrderService } from "../../../interface/OrderInterface";
 import { IResponse } from "../../../interface/responseHandler";
 
 export default class OrderService implements IOrderService {
-    async createOrder(body: any, files: any, user: any): Promise<IResponse> {
+    async createOrder(body: any, file: any, user: any): Promise<IResponse> {
         try {
-            if (files && files.resume && files.resume.length > 0) {
-                body.resume = files.resume[0].filename
-            }
-            if (files && files.coverLetter && files.coverLetter.length > 0) {
-                body.coverLetter = files.coverLetter[0].filename
+            if (file) {
+                body.fileName = file.filename
             }
             body.userId = user.id;
             const orderInfo = await prisma.order.create({ data: body });

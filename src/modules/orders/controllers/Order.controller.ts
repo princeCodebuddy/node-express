@@ -10,7 +10,7 @@ export default class OrderController implements IOrderController {
      */
     async placeOrder(req: Request | any, res: Response): Promise<any> {
         try {
-            const orderInfo = await this.orderService.createOrder(req.body, req.files, req.user)
+            const orderInfo = await this.orderService.createOrder(req.body, req.file, req.user)
             return res.status(orderInfo.code).send({
                 data: orderInfo.data,
                 message: orderInfo.message

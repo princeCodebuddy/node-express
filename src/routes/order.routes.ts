@@ -22,7 +22,7 @@ const storage = multer.diskStorage({
     storage: storage
   })
 orderRouter.use('/order', global.auth.authenticateAPI)
-orderRouter.post('/order/place',uploadFile.fields([{name:'resume',maxCount:1},{name:'coverLetter', maxCount: 1}]),placeOrderValidation,(req,res)=>orderController.placeOrder(req,res))
+orderRouter.post('/order/place',uploadFile.single('fileName'),placeOrderValidation,(req,res)=>orderController.placeOrder(req,res))
 orderRouter.post('/order/list',orderListValidation,(req,res)=>orderController.orderList(req,res))
 orderRouter.patch('/order/update-status',updateValidation,(req,res)=>orderController.updateOrder(req,res))
 export default orderRouter;
